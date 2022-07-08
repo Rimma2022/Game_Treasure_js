@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        div.map {
+            margin: 0 auto;
+            width: 500px;
+            height: 500px;
+            background: url("map.jpg") no-repeat center center/cover;
+        }          
+    </style>
+
+</head>
+
+<body>
+    <div class="map"></div>
+    <p class="user__position"></p>
+    <p class="count__click"></p>
+
+    <script>
+        alert("Клад спрятан! Удачи в поисках!");
+        let clicks = 1;
+        let getRandomNumber = function(size) {
+            return Math.floor(Math.random() * size);
+        };
+        let treasure = {
+            x: getRandomNumber(500),
+            y: getRandomNumber(500)
+        };        
+
+        let mousePosition = {
+            x: 0,
+            y: 0
+        };
+        $("div.map").click(function (e) {                       
+            mousePosition.x = e.offsetX;
+            mousePosition.y = e.offsetY;
+            let dist = getDisctance();
+            let Message = showMessageForUser(dist);
+            $("p.user__position").text(Message);
+            let MessageCliks = Clicks(); 
+            $("p.count__click").text("Номер попытки: " + MessageCliks);        
+        });
+        function getDisctance() {            
+            let result = Math.sqrt(Math.pow((mousePosition.x - treasure.x), 2) + ((mousePosition.y - treasure.y), 2));
+            return result;
+            alert(result);
+        };
+        function showMessageForUser(dist){
+            if (dist < 10) {
+                alert("Клад найден! Сделано кликов: " + clicks);
+            } else if (dist < 20) {
+                return "Обожжешься!";
+            } else if (dist < 40) {
+                return "Очень горячо!";
+            } else if (dist < 60) {
+                return "Горячо!";
+            } else if (dist < 100) {
+                return "Тепло!";
+            } else if (dist < 200) {
+                return "Холодно!";
+            } else if (dist < 400) {
+                return "Очень холодно!";
+            } else {
+                return "Замерзнешь!";
+            }
+        };
+        function Clicks() {            
+            return clicks++;
+        }       
+    </script>
+
+</body>
+
+</html>
